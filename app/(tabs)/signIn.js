@@ -1,7 +1,7 @@
 import { View, Text,Image,TextInput,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import {router} from 'expo-router'
-import { firebase_auth } from '../../firebaseConfig';
+import { firebase_Auth } from '../../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -13,7 +13,7 @@ const signIn = () => {
 const handlesignIn = async () => {
     try{
        const userCredential = await signInWithEmailAndPassword(
-        firebase_auth,
+        firebase_Auth,
         email,
         password
        );
@@ -48,14 +48,16 @@ const handlesignIn = async () => {
           <Image
           source={require("../../assets/images/Rmplogo.png")} className="rounded-lg w-[150px] h-[150px] justify-center"
           />
-        <Text className="text-2xl font-medium">Welcome Back!</Text>
+
+      <View className="bg-gray-200 rounded-xl  items-center w-[330px] h-[350px]">    
+        <Text className="text-2xl font-semibold mt-5">Welcome Back!</Text>
       
-      <View className="gap-6 mr-5 items-center">
-      <View>
+      <View className="gap-6  items-center mt-3">
+      <View  > 
         <Text className="font-bold mb-1"> Email </Text>
         <TextInput
           placeholder="Enter your email"
-          className="border border-gray-800 rounded w-72 p-2"
+          className="border rounded-lg w-72 p-2 bg-white"
           autoCapitalize="none"
           value={email}
           onChangeText={(text) => setEmail(text)}
@@ -65,7 +67,7 @@ const handlesignIn = async () => {
       <View>
         <Text className="font-bold mb-1"> Password </Text>
         <TextInput
-          className="border border-gray-800 rounded w-72 p-2"
+          className="border bg-white rounded-lg w-72 p-2"
           placeholder="Password"
           secureTextEntry={!showPassword}
           onChangeText={(text) => setPassword(text)}
@@ -88,6 +90,7 @@ const handlesignIn = async () => {
         >
           <Text className="text-white text-center font-semibold"> Log In </Text>
         </TouchableOpacity>
+      </View>
       </View>
       </View>
   

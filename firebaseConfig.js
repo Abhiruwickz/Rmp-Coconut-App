@@ -13,7 +13,8 @@ const firebaseConfig = {
     projectId: "rmp-coconuts",
     storageBucket: "rmp-coconuts.appspot.com",
     messagingSenderId: "743970093389",
-    appId: "1:743970093389:web:a42b5668b0713fd52a1f04"
+    appId: "1:743970093389:web:a42b5668b0713fd52a1f04",
+    databaseURL:"https://rmp-coconuts-default-rtdb.asia-southeast1.firebasedatabase.app/"
   };
 
 // Initialize Firebase
