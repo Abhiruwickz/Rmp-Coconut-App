@@ -71,7 +71,7 @@ const signUp = () => {
           <Text className="font-bold mb-1"> Username </Text>
           <TextInput
             placeholder="Enter your username"
-            className="border border-gray-800 rounded w-72 p-2"
+            className="border border-gray-800 rounded w-72 p-2 bg-white"
             autoCapitalize="none"
             value={username}
             onChangeText={(text) => setUsername(text)}
@@ -82,7 +82,7 @@ const signUp = () => {
           <Text className="font-bold mb-1"> Email </Text>
           <TextInput
             placeholder="Enter your email"
-            className="border border-gray-800 rounded w-72 p-2"
+            className="border rounded w-72 p-2 bg-white"
             autoCapitalize="none"
             value={email}
             onChangeText={(text) => setEmail(text)}
@@ -92,7 +92,7 @@ const signUp = () => {
         <View>
           <Text className="font-bold mb-1"> Password </Text>
           <TextInput
-            className="border border-gray-800 rounded w-72 p-2"
+            className="border rounded w-72 p-2 bg-white" 
             placeholder="Password"
             secureTextEntry={!showPassword}
             onChangeText={(text) => setPassword(text)}
