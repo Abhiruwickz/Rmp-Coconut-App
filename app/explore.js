@@ -8,7 +8,7 @@ const explore = () => {
     <View className="justify-center items-center bg-white flex-1">
       <View className="-mt-16">
       <Image
-      source={require("../../assets/images/Rmplogo.png")}
+      source={require("../assets/images/Rmplogo.png")}
       className="rounded-lg w-[170px] h-[170px] justify-center"
       >
       </Image>
