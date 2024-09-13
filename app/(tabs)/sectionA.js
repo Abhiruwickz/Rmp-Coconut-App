@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native';
-import { ref, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity,Image,Alert} from 'react-native';
+import { ref, query, orderByChild, equalTo, onValue,remove } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
 import { router } from 'expo-router';
 
@@ -22,6 +22,37 @@ const SectionA = () => {
     });
   }, []);
 
+  const handleDelete = (id) => {
+    Alert.alert(
+      "Confirm Delete",
+      "Are you sure you want to delete this coconut?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            const coconutRef = ref(Real_time_database, `Coconuts/${id}`);
+            remove(coconutRef)
+              .then(() => {
+                alert('Coconut deleted successfully');
+                console.log('Coconut deleted successfully');
+                // Optionally, you can refresh the list after deletion
+                setCoconuts(coconuts.filter(coconut => coconut.id !== id));
+              })
+              .catch((error) => {
+                console.error('Error deleting coconut:', error);
+                console.log('Error deleting coconut:', error);
+              });
+          }
+        }
+      ]
+    );
+  };
+
+
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -36,6 +67,10 @@ const SectionA = () => {
       {coconuts.length > 0 ? (
         coconuts.map((coconut) => (
           <View key={coconut.id} className="border p-3 rounded-lg mb-4">
+            <TouchableOpacity onPress={() => handleDelete(coconut.id)} className="ml-64 w-[50px] h-[50px]">
+              <Image source={require('../../assets/images/delete.png')} className="w-[24px] h-[24px]" />
+            
+            </TouchableOpacity>
             <Text>Date: {coconut.date}</Text>
             <Text>SR/GRN: {coconut.sr_grn}</Text>
             <Text>Weight: {coconut.weight}</Text>

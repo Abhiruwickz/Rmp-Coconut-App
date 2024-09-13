@@ -82,7 +82,7 @@ const UpdateSectionB = () => {
   }
 
   return (
-    <View className="p-5">
+    <View className="p-5 bg-white flex-1">
       <Text className="text-xl font-bold mb-5">Update Coconut</Text>
       <TextInput value={date} onChangeText={setDate} placeholder="Date" className="border p-2 mb-3" />
       <TextInput value={sr_grn} onChangeText={setSr_grn} placeholder="SR/GRN" className="border p-2 mb-3" />
