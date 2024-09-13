@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity } from 'react-native';
 import { ref, query, orderByChild, equalTo, onValue } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
+import { router } from 'expo-router';
 
 const SectionA = () => {
   const [loading, setLoading] = useState(true);
@@ -42,7 +43,12 @@ const SectionA = () => {
             <Text>Rejected: {coconut.rejected}</Text>
             <Text>Supplier: {coconut.supplier}</Text>
             <Text>Vehicle No: {coconut.vehicleNo}</Text>
+            <TouchableOpacity onPress={() => router.push({ pathname: "../updateSectionA", params: { id: coconut.id, coconut }  })} className="rounded-lg bg-red-300 h-[30px] w-[70px] ml-56 ">
+              <Text className="text-center mt-1 font-semibold ">Update </Text>
+               
+              </TouchableOpacity>
           </View>
+          
         ))
       ) : (
         <Text>No coconuts found for Section A</Text>
