@@ -9,9 +9,12 @@ export default function App() {
   return (
     <View className="items-center flex-1 justify-center bg-white">
       <Image
-        source={require("../../assets/images/Rmplogo.png")}
+        source={require("../assets/images/Rmplogo.png")}
         className="rounded-lg w-[200px] h-[200px]"
       />
+      <TouchableOpacity className="bg-orange-600 rounded-lg w-[200px] h-[40px] mt-8"  onPress={() => router.navigate("../user/open")}>
+        <Text className="text-center text-white font-semibold text-lg mt-1">Get Started</Text>
+      </TouchableOpacity>
     </View>
   );
 }

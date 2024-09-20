@@ -38,7 +38,7 @@ const signUp = () => {
 
       console.log("User signed up successfully", user);
       // Navigate to another screen after signup, e.g., explore page
-       router.replace("../(tabs)/signIn");  
+       router.replace("../user/signIn");  
     } catch (error) {
       // Handle sign-up errors
       switch (error.code) {

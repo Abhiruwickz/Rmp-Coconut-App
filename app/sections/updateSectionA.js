@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
 import { ref, get,update } from 'firebase/database';
-import { Real_time_database } from '../firebaseConfig';
+import { Real_time_database } from '../../firebaseConfig';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
 const UpdateSectionB = () => {
@@ -38,6 +38,8 @@ const UpdateSectionB = () => {
   const [supplier, setSupplier] = useState('');
   const [vehicleNo, setVehicleNo] = useState('');
 
+
+
   // Set initial values from fetched coconut data
   useEffect(() => {
     if (coconutDetails) {
@@ -48,6 +50,7 @@ const UpdateSectionB = () => {
       setRejected(coconutDetails.rejected || '');
       setSupplier(coconutDetails.supplier || '');
       setVehicleNo(coconutDetails.vehicleNo || '');
+  
     }
   }, [coconutDetails]);
 
@@ -83,14 +86,23 @@ const UpdateSectionB = () => {
 
   return (
     <View className="p-5 bg-white flex-1">
-      <Text className="text-xl font-bold mb-5">Update Coconut</Text>
+      <Text className="text-xl font-bold mb-5 text-center">Update Coconut</Text>
+
+     <Text className="font-semibold text-md mb-3"> Date     </Text>
       <TextInput value={date} onChangeText={setDate} placeholder="Date" className="border p-2 mb-3" />
+ 
+      <Text className="font-semibold text-md mb-3"> SR/GRN    </Text>
       <TextInput value={sr_grn} onChangeText={setSr_grn} placeholder="SR/GRN" className="border p-2 mb-3" />
+  
+      <Text className="font-semibold text-md mb-3"> Weight   </Text>
       <TextInput value={weight} onChangeText={setWeight} placeholder="Weight" className="border p-2 mb-3" />
+   
+      <Text className="font-semibold text-md mb-3"> No of Nuts  </Text>
       <TextInput value={noOfNuts} onChangeText={setNoOfNuts} placeholder="No of Nuts" className="border p-2 mb-3" />
+    
+      <Text className="font-semibold text-md mb-3"> Rejected </Text>
       <TextInput value={rejected} onChangeText={setRejected} placeholder="Rejected" className="border p-2 mb-3" />
-      <TextInput value={supplier} onChangeText={setSupplier} placeholder="Supplier" className="border p-2 mb-3" />
-      <TextInput value={vehicleNo} onChangeText={setVehicleNo} placeholder="Vehicle No" className="border p-2 mb-3" />
+     
       <Button title="Update Coconut" onPress={handleUpdate} />
     </View>
   );

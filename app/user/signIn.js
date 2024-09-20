@@ -19,7 +19,7 @@ const handlesignIn = async () => {
        );
        const user = userCredential.user;
        console.log("User Log In Successfully");
-       router.replace("../(tabs)/explore")
+       router.replace("../(tabs)/home")
     }  
     catch(error){
         switch(error.message){

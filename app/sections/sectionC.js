@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity,Image,Alert} from 'react-native';
-import { ref, query, orderByChild, equalTo, onValue,remove } from 'firebase/database';
+import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity,Alert,Image } from 'react-native';
+import { ref, query, orderByChild, equalTo, onValue } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
 import { router } from 'expo-router';
 
-const SectionA = () => {
+const SectionC = () => {
   const [loading, setLoading] = useState(true);
   const [coconuts, setCoconuts] = useState([]);
 
   useEffect(() => {
     // Query to get coconuts for Section A
     const coconutsRef = ref(Real_time_database, 'Coconuts');
-    const sectionQuery = query(coconutsRef, orderByChild('section'), equalTo('Section A'));
+    const sectionQuery = query(coconutsRef, orderByChild('section'), equalTo('Section C'));
 
     // Listen for value changes
     onValue(sectionQuery, (snapshot) => {
@@ -52,7 +52,6 @@ const SectionA = () => {
     );
   };
 
-
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center">
@@ -63,33 +62,31 @@ const SectionA = () => {
 
   return (
     <ScrollView className="p-5 bg-white">
-      <Text className="text-xl font-bold mb-5">Section A Coconuts</Text>
+      <Text className="text-xl font-bold mb-5 text-center mt-3">Section C Coconuts</Text>
       {coconuts.length > 0 ? (
         coconuts.map((coconut) => (
           <View key={coconut.id} className="border p-3 rounded-lg mb-4">
             <TouchableOpacity onPress={() => handleDelete(coconut.id)} className="ml-64">
               <Image source={require('../../assets/images/delete.png')} className="w-[36px] h-[36px]" />
-            
             </TouchableOpacity>
             <Text>Date: {coconut.date}</Text>
             <Text>SR/GRN: {coconut.sr_grn}</Text>
-            <Text>Weight: {coconut.weight}</Text>
+            <Text>Weight in Kg: {coconut.weight}</Text>
             <Text>No of Nuts: {coconut.noOfNuts}</Text>
             <Text>Rejected: {coconut.rejected}</Text>
             <Text>Supplier: {coconut.supplier}</Text>
             <Text>Vehicle No: {coconut.vehicleNo}</Text>
-            <TouchableOpacity onPress={() => router.push({ pathname: "../updateSectionA", params: { id: coconut.id, coconut }  })} className="rounded-lg bg-red-300 h-[40px] w-[80px] ml-52 ">
+            <TouchableOpacity onPress={() => router.push({ pathname: "../sections/updateSectionC", params: { id: coconut.id, coconut }  })} className="rounded-lg bg-red-300 h-[40px] w-[80px] ml-52 ">
               <Text className="text-center mt-2 font-semibold ">Update </Text>
                
               </TouchableOpacity>
           </View>
-          
         ))
       ) : (
-        <Text>No coconuts found for Section A</Text>
+        <Text>No coconuts found for Section C</Text>
       )}
     </ScrollView>
   );
 };
 
-export default SectionA;
+export default SectionC;

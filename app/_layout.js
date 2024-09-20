@@ -31,6 +31,15 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
+        <Stack.Screen name="index" options={{headerShown:false}} />
+        <Stack.Screen name="user/open" options={{headerShown:false}} />
+        <Stack.Screen name="user/signIn" options={{headerShown:false}} />
+        <Stack.Screen name="user/signUp" options={{headerShown:false}} />
+        <Stack.Screen name="sections/sectionA" options={{headerShown:false}} />
+        <Stack.Screen name="sections/sectionB" options={{headerShown:false}} />
+        <Stack.Screen name="sections/sectionC" options={{headerShown:false}} />
+        
+
       </Stack>
     </ThemeProvider>
   );

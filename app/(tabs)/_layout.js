@@ -15,7 +15,7 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
@@ -23,15 +23,26 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* <Tabs.Screen
-        name="explore"
+      
+       <Tabs.Screen
+        name="addCoconut"
         options={{
-          title: 'Explore',
+          title: 'Add Coconut',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'add-circle-sharp' : 'add-circle-sharp'} color={color} />
+          ), 
+        }}
+      />
+       <Tabs.Screen
+        name="coconutsection"
+        options={{
+          title: 'Coconut',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'leaf' : 'leaf-outline'} color={color} />
           ),
         }}
-      /> */}
+      />
     </Tabs>
+
   );
 }
