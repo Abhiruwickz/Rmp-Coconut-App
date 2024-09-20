@@ -113,7 +113,7 @@ const home = () => {
     );
   }
   return (
- <ScrollView>
+
     <View className="bg-white flex-1">
       <View className="flex flex-row">
         <Image source = {require("../../assets/images/Rmplogo.png")} className="rounded-lg w-[80px] h-[80px] mt-10 " />
@@ -165,7 +165,7 @@ const home = () => {
       />
 
     </View>
- </ScrollView>
+
   )
 }
 
