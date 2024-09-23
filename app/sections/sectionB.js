@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator,TouchableOpacity,Alert,Image } from 'react-native';
-import { ref, query, orderByChild, equalTo, onValue } from 'firebase/database';
+import { ref, query, orderByChild, equalTo, onValue,remove } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
 import { router } from 'expo-router';
 
