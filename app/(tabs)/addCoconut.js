@@ -4,6 +4,7 @@ import { ref, push } from "firebase/database";
 import { Real_time_database } from "../../firebaseConfig"; 
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {pushnotification} from '../notification/pushnotification';
 
 const AddCoconut = () => {
   const [form, setForm] = useState({
@@ -42,7 +43,7 @@ const AddCoconut = () => {
 
     const coconutsRef = ref(Real_time_database, 'Coconuts');
     push(coconutsRef, form)
-      .then(() => {
+      .then(async() => {
         Alert.alert('Success', 'Coconut added successfully');
         setForm({
           date: '',
@@ -55,11 +56,19 @@ const AddCoconut = () => {
           vehicleNo:'',
         });
         setSelectedSize('');
+           // Call push notification after successful data push
+           const expoPushToken = 'YOUR_EXPO_PUSH_TOKEN'; // Replace with the actual Expo push token
+           await pushnotification(
+             'Coconut Added!',
+             `A new coconut has been added to ${section}.`,
+             expoPushToken
+           );
       })
       .catch((error) => {
         Alert.alert('Error', 'Failed to add coconut. Please try again.');
         console.error('Error adding coconut:', error);
       });
+
   };
 
   return (
@@ -169,6 +178,7 @@ const AddCoconut = () => {
           <TouchableOpacity
             className="bg-orange-500 rounded-lg p-3 w-40 text-center ml-20 mt-5"
             onPress={handleSubmit}
+           
           >
             <Text className="text-white text-center font-semibold">Add Product</Text>
           </TouchableOpacity>

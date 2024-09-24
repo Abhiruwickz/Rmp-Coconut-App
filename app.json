@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Rmp_Coconut",
-    "slug": "Rmp_Coconut",
+    "slug": "rmp-coconuts",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.casioabx.rmpcoconuts"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +32,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b0ea500a-812e-4801-a899-794fd5ba315b"
+      }
+    },
+    "owner": "casioabx"
   }
 }
