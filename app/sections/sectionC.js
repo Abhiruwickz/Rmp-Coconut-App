@@ -18,7 +18,14 @@ const SectionC = () => {
       const data = snapshot.val();
       const coconutsList = data ? Object.entries(data).map(([id, details]) => ({ id, ...details })) : [];
       setCoconuts(coconutsList);
+
+      //Sort by date in descending order
+      setLoading(false); coconutsList.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      setCoconuts(coconutsList);
       setLoading(false);
+
+
     });
   }, []);
 
@@ -66,7 +73,7 @@ const SectionC = () => {
       {coconuts.length > 0 ? (
         coconuts.map((coconut) => (
           <View key={coconut.id} className="border p-3 rounded-lg mb-4">
-            <TouchableOpacity onPress={() => handleDelete(coconut.id)} className="ml-64">
+            <TouchableOpacity onPress={() => handleDelete(coconut.id)} className="ml-72  ">
               <Image source={require('../../assets/images/delete.png')} className="w-[36px] h-[36px]" />
             </TouchableOpacity>
             <Text>Date: {coconut.date}</Text>
@@ -76,7 +83,7 @@ const SectionC = () => {
             <Text>Rejected: {coconut.rejected}</Text>
             <Text>Supplier: {coconut.supplier}</Text>
             <Text>Vehicle No: {coconut.vehicleNo}</Text>
-            <TouchableOpacity onPress={() => router.push({ pathname: "../sections/updateSectionC", params: { id: coconut.id, coconut }  })} className="rounded-lg bg-red-300 h-[40px] w-[80px] ml-52 ">
+            <TouchableOpacity onPress={() => router.push({ pathname: "../sections/updateSectionC", params: { id: coconut.id, coconut }  })} className="rounded-lg bg-red-300 h-[40px] w-[140px] ml-48 ">
               <Text className="text-center mt-2 font-semibold ">Update </Text>
                
               </TouchableOpacity>
