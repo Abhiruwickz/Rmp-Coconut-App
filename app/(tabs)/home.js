@@ -2,7 +2,7 @@ import { View, Text,Image, TouchableOpacity, ActivityIndicator, Dimensions,Scrol
 import React, { useState,useEffect } from 'react'
 import { Real_time_database } from '../../firebaseConfig';
 import { ref, onValue } from 'firebase/database';
-import { LineChart } from 'react-native-chart-kit';
+import { LineChart,Barchart } from 'react-native-chart-kit';
 
 
 const screenWidth = Dimensions.get('window').width;
