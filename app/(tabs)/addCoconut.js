@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, ScrollView, Alert, Platform } from 'react-native';
-import { ref, push } from "firebase/database"; 
-import { Real_time_database } from "../../firebaseConfig"; 
-import { Picker } from "@react-native-picker/picker";
+import React, { useState, useEffect } from 'react';
+import { View, TextInput, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import { ref, push } from 'firebase/database'; 
+import { Real_time_database } from '../../firebaseConfig'; 
+import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {pushnotification} from '../notification/pushnotification';
+import { registerForPushNotificationsAsync, sendPushNotification } from '../notification/pushnotification'; 
 
 const AddCoconut = () => {
   const [form, setForm] = useState({
     date: '',
     sr_grn: '',
     section: '',
-    weight:'',
-    noOfNuts:'',
-    rejected:'',
-    supplier:'',
-    vehicleNo:'',
+    weight: '',
+    noOfNuts: '',
+    rejected: '',
+    supplier: '',
+    vehicleNo: '',
   });
 
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState('Section A'); // Default value
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
+
+  
 
   const handleChange = (name, value) => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -33,42 +36,47 @@ const AddCoconut = () => {
     handleChange('date', currentDate.toISOString().split('T')[0]);
   };
 
-  const handleSubmit = () => {
-    const { sr_grn, section, date, quantity,supplier,weight,noOfNuts,rejected,vehicleNo } = form;
+  const handleSubmit = async () => {
+    const { sr_grn, section, date, supplier, weight, noOfNuts, rejected, vehicleNo } = form;
 
-    if (!sr_grn || !section || !date  || !supplier || !weight || !noOfNuts || !rejected || !vehicleNo) {
+    if (!sr_grn || !section || !date || !supplier || !weight || !noOfNuts || !rejected || !vehicleNo) {
       Alert.alert('Error', 'All fields are required');
       return;
     }
 
     const coconutsRef = ref(Real_time_database, 'Coconuts');
     push(coconutsRef, form)
-      .then(async() => {
+      .then(async () => {
         Alert.alert('Success', 'Coconut added successfully');
+        console.log('coconut added successfully');
         setForm({
-          date: '',
           sr_grn: '',
           section: '',
-          weight:'',
-          noOfNuts:'',
-          rejected:'',
-          supplier:'',
-          vehicleNo:'',
+          date: '',
+          supplier: '',
+          weight: '',
+          noOfNuts: '',
+          rejected: '',
+          vehicleNo: '',
         });
-        setSelectedSize('');
-           // Call push notification after successful data push
-           const expoPushToken = 'YOUR_EXPO_PUSH_TOKEN'; // Replace with the actual Expo push token
-           await pushnotification(
-             'Coconut Added!',
-             `A new coconut has been added to ${section}.`,
-             expoPushToken
-           );
+
+        // Get the Expo push token
+        const expoPushToken = await registerForPushNotificationsAsync(); // Register for push notifications
+
+        // Call sendPushNotification after successful data push
+        if (expoPushToken) {
+          await sendPushNotification(
+            expoPushToken,
+            'Coconut Added!',
+            `A new coconut has been added to ${section}.`
+          );
+          console.log('Push notification sent successfully');
+        }
       })
       .catch((error) => {
         Alert.alert('Error', 'Failed to add coconut. Please try again.');
         console.error('Error adding coconut:', error);
       });
-
   };
 
   return (
@@ -76,7 +84,7 @@ const AddCoconut = () => {
       <View className="flex-1 p-7 bg-white">
         <View className="mt-10">
           <View className="flex flex-row items-center justify-center border-opacity-40 rounded-lg">
-          <Text className="bg-orange-500 rounded-lg p-2 w-[151px] text-xl font-bold text-center text-white mb-4"> Add Coconuts</Text>
+            <Text className="bg-orange-500 rounded-lg p-2 w-[151px] text-xl font-bold text-center text-white mb-4">Add Coconuts</Text>
           </View>
 
           {/* Date Picker */}
@@ -135,8 +143,9 @@ const AddCoconut = () => {
               onChangeText={(text) => handleChange('weight', text)}
             />
           </View>
-             {/* Supplier Input */}
-             <View className="mb-4">
+
+          {/* Supplier Input */}
+          <View className="mb-4">
             <Text>Supplier Name</Text>
             <TextInput
               className="border border-gray-300 p-2 rounded mt-4"
@@ -144,8 +153,9 @@ const AddCoconut = () => {
               onChangeText={(text) => handleChange('supplier', text)}
             />
           </View>
-             {/* Nut kg Input */}
-             <View className="mb-4">
+
+          {/* No of Nuts Input */}
+          <View className="mb-4">
             <Text>No of Nuts</Text>
             <TextInput
               className="border border-gray-300 p-2 rounded mt-4"
@@ -154,8 +164,9 @@ const AddCoconut = () => {
               onChangeText={(text) => handleChange('noOfNuts', text)}
             />
           </View>
-             {/* Rejected Input */}
-             <View className="mb-4">
+
+          {/* Rejected Input */}
+          <View className="mb-4">
             <Text>Rejected Quantity</Text>
             <TextInput
               className="border border-gray-300 p-2 rounded mt-4"
@@ -164,9 +175,10 @@ const AddCoconut = () => {
               onChangeText={(text) => handleChange('rejected', text)}
             />
           </View>
-             {/* Vehicle No Input */}
-             <View className="mb-4">
-            <Text>vehicleNo</Text>
+
+          {/* Vehicle No Input */}
+          <View className="mb-4">
+            <Text>Vehicle No</Text>
             <TextInput
               className="border border-gray-300 p-2 rounded mt-4"
               value={form.vehicleNo}
@@ -178,9 +190,9 @@ const AddCoconut = () => {
           <TouchableOpacity
             className="bg-orange-500 rounded-lg p-3 w-40 text-center ml-20 mt-5"
             onPress={handleSubmit}
-           
+            disabled={loading} // Disable while loading
           >
-            <Text className="text-white text-center font-semibold">Add Product</Text>
+            <Text className="text-white text-center font-semibold">{loading ? 'Adding...' : 'Add Product'}</Text>
           </TouchableOpacity>
         </View>
       </View>
