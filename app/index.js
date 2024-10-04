@@ -13,9 +13,11 @@ export default function App() {
       if (user) {
         // User is signed in, redirect to home page
         router.replace('./(tabs)/home'); 
+        console.log("User Logged in Successfully");
       } else {
         // No user is signed in, redirect to sign-in page
         router.replace('./user/open'); 
+        console.log("User not Logged in");
       }
     });
 

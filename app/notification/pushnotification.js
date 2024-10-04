@@ -4,18 +4,26 @@ import Constants from 'expo-constants';
 
 // Function to register for push notifications
 export const registerForPushNotificationsAsync = async () => {
-  let token;
+  try {
+    console.log("Device Check:", Constants.isDevice);
 
-  if (Constants.isDevice) {
+    if (!Constants.isDevice) {
+      alert('Must use a physical device for Push Notifications');
+      return;
+    }
+
+    let token;
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    console.log('Is device:', Constants.isDevice);
+    console.log("Existing Status:", existingStatus);
 
+    let finalStatus = existingStatus;
 
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
+
+    console.log("Final Status:", finalStatus);
 
     if (finalStatus !== 'granted') {
       alert('Failed to get push token for push notification!');
@@ -23,19 +31,20 @@ export const registerForPushNotificationsAsync = async () => {
     }
 
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use a physical device for Push Notifications');
-  }
+    console.log('Expo Push Token:', token);
 
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
+    // Android specific notification channel
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
 
-  return token;
+    return token;
+  } catch (error) {
+    console.error('Error registering for notifications:', error);
+  }
 };
