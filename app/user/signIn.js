@@ -1,6 +1,6 @@
 import { View, Text,Image,TextInput,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import {router} from 'expo-router'
+import {router,Link} from 'expo-router'
 import { firebase_Auth } from '../../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -84,12 +84,18 @@ const handlesignIn = async () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity
-        //sign in button
           className="bg-orange-600 rounded-lg p-3 w-48 text-center top-5"
           onPress={handlesignIn}
         >
           <Text className="text-white text-center font-semibold"> Log In </Text>
         </TouchableOpacity>
+        <View>
+        
+        <Link href="../user/signUp" className="rounded text-orange-600 p-2 pt-16">
+        Don't Have An Account?{" "}
+        <Text className="text-orange-700 font-bold">Sign Up Now! </Text>
+      </Link>
+        </View>
       </View>
       </View>
       </View>

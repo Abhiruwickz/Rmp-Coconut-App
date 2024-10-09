@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
-import { ref, push } from 'firebase/database'; 
-import { Real_time_database } from '../../firebaseConfig'; 
+import React, { useState } from 'react';
+import { View, TextInput, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { ref, push } from 'firebase/database';
+import { Real_time_database } from '../../firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { registerForPushNotificationsAsync, sendPushNotification } from '../notification/pushnotification'; 
 
 const AddCoconut = () => {
   const [form, setForm] = useState({
@@ -23,8 +22,6 @@ const AddCoconut = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
 
-  
-
   const handleChange = (name, value) => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
   };
@@ -38,45 +35,38 @@ const AddCoconut = () => {
 
   const handleSubmit = async () => {
     const { sr_grn, section, date, supplier, weight, noOfNuts, rejected, vehicleNo } = form;
-
+  
     if (!sr_grn || !section || !date || !supplier || !weight || !noOfNuts || !rejected || !vehicleNo) {
       Alert.alert('Error', 'All fields are required');
       return;
     }
-
-    const coconutsRef = ref(Real_time_database, 'Coconuts');
-    push(coconutsRef, form)
-      .then(async () => {
-        Alert.alert('Success', 'Coconut added successfully');
-        console.log('coconut added successfully');
-        setForm({
-          sr_grn: '',
-          section: '',
-          date: '',
-          supplier: '',
-          weight: '',
-          noOfNuts: '',
-          rejected: '',
-          vehicleNo: '',
-        });
-
-        // Get the Expo push token
-        const expoPushToken = await registerForPushNotificationsAsync(); // Register for push notifications
-
-        // Call sendPushNotification after successful data push
-        if (expoPushToken) {
-          await sendPushNotification(
-            expoPushToken,
-            'Coconut Added!',
-            `A new coconut has been added to ${section}.`
-          );
-          console.log('Push notification sent successfully');
-        }
-      })
-      .catch((error) => {
-        Alert.alert('Error', 'Failed to add coconut. Please try again.');
-        console.error('Error adding coconut:', error);
+  
+    setLoading(true); // Start loading
+  
+    try {
+      const coconutsRef = ref(Real_time_database, 'Coconuts');
+      await push(coconutsRef, form);
+      Alert.alert('Success', 'Coconut added successfully');
+      console.log('Coconut added successfully');
+  
+      // Reset form
+      setForm({
+        sr_grn: '',
+        section: '',
+        date: '',
+        supplier: '',
+        weight: '',
+        noOfNuts: '',
+        rejected: '',
+        vehicleNo: '',
       });
+  
+    } catch (error) {
+      Alert.alert('Error', 'Failed to add coconut. Please try again.');
+      console.error('Error adding coconut:', error);
+    } finally {
+      setLoading(false); // Stop loading
+    }
   };
 
   return (
