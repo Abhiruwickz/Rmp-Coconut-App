@@ -1,28 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Text, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
-import { router } from "expo-router";
-import { firebase_Auth } from "../firebaseConfig"; // Adjust the path if necessary
+import { useRouter } from "expo-router"; 
+import { firebase_Auth } from "../firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 
 export default function App() {
   const [loading, setLoading] = useState(false);
+  const router = useRouter(); 
 
-  const handleGetStarted = () => {
-    setLoading(true); 
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebase_Auth, (user) => {
       if (user) {
-        // User is signed in, redirect to home page
-        router.replace('./(tabs)/home'); 
+        // User is signed in, navigate to home page
+        router.replace("/home"); 
         console.log("User Logged in Successfully");
       } else {
-        // No user is signed in, redirect to sign-in page
-        router.replace('./user/open'); 
+        // No user is signed in, navigate to sign-in page
+        router.replace("/user/open"); // Adjust path as per your app structure
         console.log("User not Logged in");
       }
     });
 
-    // Cleanup subscription
+    // Cleanup subscription on unmount
     return () => unsubscribe();
+  }, [router]);
+
+  const handleGetStarted = () => {
+    setLoading(true);
+    // The onAuthStateChanged logic will handle navigation based on user status
   };
 
   return (
@@ -31,7 +36,7 @@ export default function App() {
         source={require("../assets/images/Rmplogo.png")}
         className="rounded-lg w-[200px] h-[200px]"
       />
-      
+
       {/* If loading, show an activity indicator */}
       {loading ? (
         <ActivityIndicator size="large" color="#FFA500" />
