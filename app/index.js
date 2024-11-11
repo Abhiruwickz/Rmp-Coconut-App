@@ -8,6 +8,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const router = useRouter(); 
 
+
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebase_Auth, (user) => {
       if (user) {
@@ -25,10 +27,7 @@ export default function App() {
     return () => unsubscribe();
   }, [router]);
 
-  const handleGetStarted = () => {
-    setLoading(true);
-    // The onAuthStateChanged logic will handle navigation based on user status
-  };
+
 
   return (
     <View className="items-center flex-1 justify-center bg-white">
@@ -37,17 +36,7 @@ export default function App() {
         className="rounded-lg w-[200px] h-[200px]"
       />
 
-      {/* If loading, show an activity indicator */}
-      {loading ? (
-        <ActivityIndicator size="large" color="#FFA500" />
-      ) : (
-        <TouchableOpacity
-          className="bg-orange-600 rounded-lg w-[200px] h-[40px] mt-8"
-          onPress={handleGetStarted}
-        >
-          <Text className="text-center text-white font-semibold text-lg mt-1">Get Started</Text>
-        </TouchableOpacity>
-      )}
+      
     </View>
   );
 }
