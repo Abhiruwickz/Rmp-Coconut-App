@@ -26,6 +26,7 @@ export default function RootLayout() {
     return null;
   }
 
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
@@ -38,9 +39,11 @@ export default function RootLayout() {
         <Stack.Screen name="sections/sectionA" options={{headerShown:false}} />
         <Stack.Screen name="sections/sectionB" options={{headerShown:false}} />
         <Stack.Screen name="sections/sectionC" options={{headerShown:false}} />
-        
-
-      </Stack>
+        <Stack.Screen name="sections/notification" options={{headerShown:false}} />
+        <Stack.Screen name="sections/updateSectionA" options={{headerShown:false}} />
+        <Stack.Screen name="sections/updateSectionB" options={{headerShown:false}} />
+        <Stack.Screen name="sections/updateSectionC" options={{headerShown:false}} />
+            </Stack>
     </ThemeProvider>
   );
 }

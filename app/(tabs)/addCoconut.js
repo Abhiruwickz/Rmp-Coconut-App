@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { ref, push } from 'firebase/database';
+import { ref, push, onValue } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as MailComposer from 'expo-mail-composer';
 
 const AddCoconut = () => {
   const [form, setForm] = useState({
@@ -21,6 +22,19 @@ const AddCoconut = () => {
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
+  const [userEmails, setUserEmails] = useState([]); // State to store user emails
+
+  useEffect(() => {
+    // Fetch user emails from Firebase
+    const usersRef = ref(Real_time_database, 'users');
+    const unsubscribe = onValue(usersRef, (snapshot) => {
+      const usersData = snapshot.val();
+      const emails = Object.values(usersData || {}).map((user) => user.email);
+      setUserEmails(emails);
+    });
+
+    return () => unsubscribe(); // Cleanup listener
+  }, []);
 
   const handleChange = (name, value) => {
     setForm((prevForm) => ({ ...prevForm, [name]: value }));
@@ -33,22 +47,51 @@ const AddCoconut = () => {
     handleChange('date', currentDate.toISOString().split('T')[0]);
   };
 
+  const notifyUsers = async () => {
+    const emailBody = `
+      A new coconut has been added with the following details:
+      - SR/GRN: ${form.sr_grn}
+      - Section: ${form.section}
+      - Date: ${form.date}
+      - Supplier: ${form.supplier}
+      - Weight: ${form.weight}
+      - No of Nuts: ${form.noOfNuts}
+      - Rejected: ${form.rejected}
+      - Vehicle No: ${form.vehicleNo}
+    `;
+   
+
+    try {
+      await MailComposer.composeAsync({
+        recipients: userEmails,
+        subject: 'New Coconut Added',
+        body: emailBody,
+      });
+      console.log('Notification emails sent successfully');
+    } catch (error) {
+      console.error('Error sending emails:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     const { sr_grn, section, date, supplier, weight, noOfNuts, rejected, vehicleNo } = form;
-  
-    if (!sr_grn || !section || !date || !supplier || !weight || !noOfNuts || !rejected || !vehicleNo) {
-      Alert.alert('Error', 'All fields are required');
+
+    if (!sr_grn || !section || !date || !supplier || !weight || !noOfNuts || !vehicleNo) {
+      Alert.alert('Error', 'fields are required');
       return;
     }
-  
+
     setLoading(true); // Start loading
-  
+
     try {
       const coconutsRef = ref(Real_time_database, 'Coconuts');
       await push(coconutsRef, form);
       Alert.alert('Success', 'Coconut added successfully');
       console.log('Coconut added successfully');
-  
+
+      // Send notifications to users
+      await notifyUsers();
+
       // Reset form
       setForm({
         sr_grn: '',
@@ -60,7 +103,6 @@ const AddCoconut = () => {
         rejected: '',
         vehicleNo: '',
       });
-  
     } catch (error) {
       Alert.alert('Error', 'Failed to add coconut. Please try again.');
       console.error('Error adding coconut:', error);
