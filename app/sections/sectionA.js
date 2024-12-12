@@ -58,6 +58,28 @@ const SectionA = () => {
     );
   };
 
+  const handleFilter = () => {
+    if (filterType === 'month') {
+      const filtered = coconuts.filter((coconut) =>
+        new Date(coconut.date).toISOString().slice(0, 7) === filterValue
+      );
+      setFilteredCoconuts(filtered);
+    } else if (filterType === 'week') {
+      const filtered = coconuts.filter((coconut) => {
+        const coconutDate = new Date(coconut.date);
+        const startOfWeek = new Date(filterValue);
+        const endOfWeek = new Date(filterValue);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+        return coconutDate >= startOfWeek && coconutDate <= endOfWeek;
+      });
+      setFilteredCoconuts(filtered);
+    } else {
+      setFilteredCoconuts(coconuts);
+    }
+  };
+
+
 
   if (loading) {
     return (
@@ -69,7 +91,7 @@ const SectionA = () => {
 
   return (
     <ScrollView className="p-5 bg-white">
-      <Text className="text-xl font-bold mb-5 text-center mt-3">Section A Coconuts</Text>
+      <Text className="text-xl font-bold mb-5 text-center mt-10">Section A Coconuts</Text>
       {coconuts.length > 0 ? (
         coconuts.map((coconut) => (
           <View key={coconut.id} className="border p-3 rounded-lg mb-4">

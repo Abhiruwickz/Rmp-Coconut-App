@@ -82,8 +82,8 @@ const UpdateSectionB = () => {
   }
 
   return (
-      <View className="p-5 bg-white flex-1">
-      <Text className="text-xl font-bold mb-5 text-center">Update Coconut</Text>
+      <View className="p-5 bg-white flex-1 mt-10">
+      <Text className="text-xl font-bold mb-5 text-center ">Update Coconut</Text>
 
      <Text className="font-semibold text-md mb-3"> Date     </Text>
       <TextInput value={date} onChangeText={setDate} placeholder="Date" className="border p-2 mb-3" />

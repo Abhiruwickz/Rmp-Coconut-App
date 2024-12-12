@@ -50,6 +50,7 @@ const AddCoconut = () => {
   const notifyUsers = async () => {
     const emailBody = `
       A new coconut has been added with the following details:
+      
       - SR/GRN: ${form.sr_grn}
       - Section: ${form.section}
       - Date: ${form.date}
@@ -116,7 +117,7 @@ const AddCoconut = () => {
       <View className="flex-1 p-7 bg-white">
         <View className="mt-10">
           <View className="flex flex-row items-center justify-center border-opacity-40 rounded-lg">
-            <Text className="bg-orange-500 rounded-lg p-2 w-[151px] text-xl font-bold text-center text-white mb-4">Add Coconuts</Text>
+            <Text className="bg-orange-500 rounded-md p-2 w-[251px] text-xl font-bold text-center text-white mb-5">Add Coconuts</Text>
           </View>
 
           {/* Date Picker */}
@@ -220,7 +221,7 @@ const AddCoconut = () => {
 
           {/* Submit Button */}
           <TouchableOpacity
-            className="bg-orange-500 rounded-lg p-3 w-40 text-center ml-20 mt-5"
+            className="bg-orange-500 rounded-lg p-3 w-40 text-center ml-16 mt-5"
             onPress={handleSubmit}
             disabled={loading} // Disable while loading
           >

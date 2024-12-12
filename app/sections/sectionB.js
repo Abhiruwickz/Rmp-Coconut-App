@@ -68,7 +68,7 @@ const SectionB = () => {
 
   return (
     <ScrollView className="p-5 bg-white">
-      <Text className="text-xl font-bold mb-5 text-center mt-3">Section B Coconuts</Text>
+      <Text className="text-xl font-bold mb-5 text-center mt-10">Section B Coconuts</Text>
       {coconuts.length > 0 ? (
         coconuts.map((coconut) => (
           <View key={coconut.id} className="border p-3 rounded-lg mb-4">
