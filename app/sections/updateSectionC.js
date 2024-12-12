@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { View, TextInput, Button, Text, ActivityIndicator } from 'react-native';
-import { ref, get,update } from 'firebase/database';
+import { ref, get, update, onValue } from 'firebase/database';
 import { Real_time_database } from '../../firebaseConfig';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import * as MailComposer from 'expo-mail-composer';
 
-const UpdateSectionB = () => {
+const UpdateSectionC = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams(); // Retrieve the coconut id
 
   // State for coconut details
   const [coconutDetails, setCoconutDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [userEmails, setUserEmails] = useState([]); // State to store user emails
 
-  // Fetch coconut data from                      
+  // Fetch coconut data from Firebase
   useEffect(() => {
     const coconutRef = ref(Real_time_database, `Coconuts/${id}`);
     get(coconutRef)
@@ -28,6 +30,18 @@ const UpdateSectionB = () => {
       })
       .finally(() => setLoading(false));
   }, [id]);
+
+  // Fetch user emails from Firebase
+  useEffect(() => {
+    const usersRef = ref(Real_time_database, 'users');
+    const unsubscribe = onValue(usersRef, (snapshot) => {
+      const usersData = snapshot.val();
+      const emails = Object.values(usersData || {}).map((user) => user.email);
+      setUserEmails(emails);
+    });
+
+    return () => unsubscribe(); // Cleanup the listener
+  }, []);
 
   // Form input states
   const [date, setDate] = useState('');
@@ -65,10 +79,41 @@ const UpdateSectionB = () => {
     })
       .then(() => {
         alert('Coconut updated successfully!');
+        sendEmail(); // Trigger email sending
         router.back();
       })
       .catch((error) => {
         console.error('Error updating coconut:', error);
+      });
+  };
+
+  // Function to send an email
+  const sendEmail = () => {
+    const recipients = userEmails;
+    const subject = "Coconut Details Updated";
+    const body = `The following coconut details have been updated:\n\n
+    Date: ${date}\n
+    SR/GRN: ${sr_grn}\n
+    Weight: ${weight}\n
+    No of Nuts: ${noOfNuts}\n
+    Rejected: ${rejected}\n
+    Supplier: ${supplier}\n
+    Vehicle No: ${vehicleNo}`;
+
+    MailComposer.composeAsync({
+      recipients,
+      subject,
+      body,
+    })
+      .then((result) => {
+        if (result.status === 'sent') {
+          console.log('Email sent successfully');
+        } else {
+          console.log('Email was not sent');
+        }
+      })
+      .catch((error) => {
+        console.error('Error sending email:', error);
       });
   };
 
@@ -80,6 +125,7 @@ const UpdateSectionB = () => {
       </View>
     );
   }
+
 
   return (
       <View className="p-5 bg-white flex-1 mt-10">
@@ -105,4 +151,4 @@ const UpdateSectionB = () => {
   );
 };
 
-export default UpdateSectionB;
+export default UpdateSectionC;

@@ -9,7 +9,7 @@ const explore = () => {
       <View className="-mt-16">
       <Image
       source={require("../../assets/images/Rmplogo.png")}
-      className="rounded-lg w-[170px] h-[170px] justify-center ml-2"
+      className="rounded-lg w-[170px] h-[170px] justify-center ml-4"
       >
       </Image>
       <Text className="font-bold text-center text-slate-900 items-center mt-6">Welcome to the Rmp Coconuts!</Text>
