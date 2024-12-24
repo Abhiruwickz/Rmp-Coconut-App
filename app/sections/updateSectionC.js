@@ -47,6 +47,7 @@ const UpdateSectionC = () => {
   const [date, setDate] = useState('');
   const [sr_grn, setSr_grn] = useState('');
   const [weight, setWeight] = useState('');
+  const [weight2, setWeight2] = useState('');
   const [noOfNuts, setNoOfNuts] = useState('');
   const [rejected, setRejected] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -58,6 +59,7 @@ const UpdateSectionC = () => {
       setDate(coconutDetails.date || '');
       setSr_grn(coconutDetails.sr_grn || '');
       setWeight(coconutDetails.weight || '');
+      setWeight2(coconutDetails.weight2 || '');
       setNoOfNuts(coconutDetails.noOfNuts || '');
       setRejected(coconutDetails.rejected || '');
       setSupplier(coconutDetails.supplier || '');
@@ -72,6 +74,7 @@ const UpdateSectionC = () => {
       date,
       sr_grn,
       weight,
+      weight2,
       noOfNuts,
       rejected,
       supplier,
@@ -95,6 +98,7 @@ const UpdateSectionC = () => {
     Date: ${date}\n
     SR/GRN: ${sr_grn}\n
     Weight: ${weight}\n
+    Weight2: ${weight2}\n
     No of Nuts: ${noOfNuts}\n
     Rejected: ${rejected}\n
     Supplier: ${supplier}\n
@@ -137,8 +141,11 @@ const UpdateSectionC = () => {
       <Text className="font-semibold text-md mb-3"> SR/GRN    </Text>
       <TextInput value={sr_grn} onChangeText={setSr_grn} placeholder="SR/GRN" className="border p-2 mb-3" />
   
-      <Text className="font-semibold text-md mb-3"> Weight   </Text>
+      <Text className="font-semibold text-md mb-3"> 1st Weight   </Text>
       <TextInput value={weight} onChangeText={setWeight} placeholder="Weight" className="border p-2 mb-3" />
+
+      <Text className="font-semibold text-md mb-3">2nd  Weight   </Text>
+      <TextInput value={weight2} onChangeText={setWeight} placeholder="Weight" className="border p-2 mb-3" />
    
       <Text className="font-semibold text-md mb-3"> No of Nuts  </Text>
       <TextInput value={noOfNuts} onChangeText={setNoOfNuts} placeholder="No of Nuts" className="border p-2 mb-3" />

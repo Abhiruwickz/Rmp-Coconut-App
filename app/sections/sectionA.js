@@ -99,11 +99,18 @@ const SectionA = () => {
               <Image source={require('../../assets/images/delete.png')} className="w-[36px] h-[36px]" />
             
             </TouchableOpacity>
+
+            <Text className="font-bold text-md mb-3">
+              Net Weight:{' '}
+              {coconut.weight && coconut.weight2
+                ? Math.abs(coconut.weight - coconut.weight2)
+                : 'N/A'}
+            </Text>
             <Text>Date: {coconut.date}</Text>
             <Text>SR/GRN: {coconut.sr_grn}</Text>
             <Text>1st Weight: {coconut.weight}</Text>
             <Text>2nd Weight: {coconut.weight2}</Text>
-            <Text>No of Nuts: {coconut.noOfNuts}</Text>
+            <Text>No of Nuts: {coconut.noOfNuts}</Text>    
             <Text>Rejected: {coconut.rejected}</Text>
             <Text>Supplier: {coconut.supplier}</Text>
             <Text>Vehicle No: {coconut.vehicleNo}</Text>
