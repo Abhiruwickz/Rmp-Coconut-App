@@ -101,7 +101,8 @@ const SectionA = () => {
             </TouchableOpacity>
             <Text>Date: {coconut.date}</Text>
             <Text>SR/GRN: {coconut.sr_grn}</Text>
-            <Text>Weight: {coconut.weight}</Text>
+            <Text>1st Weight: {coconut.weight}</Text>
+            <Text>2nd Weight: {coconut.weight2}</Text>
             <Text>No of Nuts: {coconut.noOfNuts}</Text>
             <Text>Rejected: {coconut.rejected}</Text>
             <Text>Supplier: {coconut.supplier}</Text>

@@ -5,6 +5,7 @@ import { Real_time_database } from '../../firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as MailComposer from 'expo-mail-composer';
+import { router } from 'expo-router';
 
 const AddCoconut = () => {
   const [form, setForm] = useState({
@@ -12,6 +13,7 @@ const AddCoconut = () => {
     sr_grn: '',
     section: '',
     weight: '',
+    weight2: '',
     noOfNuts: '',
     rejected: '',
     supplier: '',
@@ -56,6 +58,7 @@ const AddCoconut = () => {
       - Date: ${form.date}
       - Supplier: ${form.supplier}
       - Weight: ${form.weight}
+      - Weight2: ${form.weight2}
       - No of Nuts: ${form.noOfNuts}
       - Rejected: ${form.rejected}
       - Vehicle No: ${form.vehicleNo}
@@ -75,7 +78,7 @@ const AddCoconut = () => {
   };
 
   const handleSubmit = async () => {
-    const { sr_grn, section, date, supplier, weight, noOfNuts, rejected, vehicleNo } = form;
+    const { sr_grn, section, date, supplier, weight, weight2, noOfNuts, rejected, vehicleNo } = form;
 
     if (!sr_grn || !section || !date || !supplier || !weight || !noOfNuts || !vehicleNo) {
       Alert.alert('Error', 'fields are required');
@@ -100,6 +103,7 @@ const AddCoconut = () => {
         date: '',
         supplier: '',
         weight: '',
+        weight2: '',
         noOfNuts: '',
         rejected: '',
         vehicleNo: '',
@@ -117,7 +121,7 @@ const AddCoconut = () => {
       <View className="flex-1 p-7 bg-white">
         <View className="mt-10">
           <View className="flex flex-row items-center justify-center border-opacity-40 rounded-lg">
-            <Text className="bg-orange-500 rounded-md p-2 w-[251px] text-xl font-bold text-center text-white mb-5">Add Coconuts</Text>
+            <Text className="bg-orange-500 rounded-md p-2 w-[150px] text-lg font-bold text-center text-white mb-5">Add Coconuts </Text>
           </View>
 
           {/* Date Picker */}
@@ -168,10 +172,21 @@ const AddCoconut = () => {
 
           {/* Weight Input */}
           <View className="mb-4">
-            <Text>Weight</Text>
+            <Text>1st Weight</Text>
             <TextInput
               className="border border-gray-300 p-2 rounded mt-4"
               value={form.weight}
+              keyboardType="numeric"
+              onChangeText={(text) => handleChange('weight', text)}
+            />
+          </View>
+
+           {/* Weight Input */}
+           <View className="mb-4">
+            <Text>2nd Weight</Text>
+            <TextInput
+              className="border border-gray-300 p-2 rounded mt-4"
+              value={form.weight2}
               keyboardType="numeric"
               onChangeText={(text) => handleChange('weight', text)}
             />
