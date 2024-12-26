@@ -188,7 +188,7 @@ const AddCoconut = () => {
               className="border border-gray-300 p-2 rounded mt-4"
               value={form.weight2}
               keyboardType="numeric"
-              onChangeText={(text) => handleChange('weight', text)}
+              onChangeText={(text) => handleChange('weight2', text)}
             />
           </View>
 

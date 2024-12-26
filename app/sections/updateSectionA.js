@@ -145,15 +145,15 @@ const UpdateSectionA = () => {
       <TextInput value={weight} onChangeText={setWeight} placeholder="Weight" className="border p-2 mb-3" />
 
       <Text className="font-semibold text-md mb-3">2nd  Weight   </Text>
-      <TextInput value={weight2} onChangeText={setWeight} placeholder="Weight" className="border p-2 mb-3" />
+      <TextInput value={weight2} onChangeText={setWeight2} placeholder="Weight" className="border p-2 mb-3" />
    
       <Text className="font-semibold text-md mb-3"> No of Nuts  </Text>
       <TextInput value={noOfNuts} onChangeText={setNoOfNuts} placeholder="No of Nuts" className="border p-2 mb-3" />
     
       <Text className="font-semibold text-md mb-3"> Rejected </Text>
-      <TextInput value={rejected} onChangeText={setRejected} placeholder="Rejected" className="border p-2 mb-3" />
+      <TextInput value={rejected} onChangeText={setRejected} placeholder="Rejected" className="border p-2 mb-7" />
      
-      <Button title="Update Coconut" onPress={handleUpdate} />
+      <Button title="Update Coconut" onPress={handleUpdate} color="#FFA500" />
     </View>
   );
 };
