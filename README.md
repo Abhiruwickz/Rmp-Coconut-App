@@ -14,9 +14,9 @@ The **RMP Coconut Products App** offers a user-friendly interface designed for m
 - **Tailwind CSS**: Applied for styling the app, providing a clean and consistent design with utility-first CSS classes.
 
 ---
-![RMP Coconut Products Logo](assets/images/Rmplogo.png)
 
-[Learn More About us (https://rmp.lk/)
+<img src="assets/images/Rmplogo.png" alt="RMP Coconut Products Logo" width="300" height="300">
 
+[Learn More About Us](https://rmp.lk/)
 
-Advance Application for Analize Coconut Production**! 🌴
+Advance Application for Analyzing Coconut Production! 🌴
